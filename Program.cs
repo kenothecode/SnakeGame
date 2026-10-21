@@ -11,6 +11,9 @@ namespace SnakeGame
 
         static void Main(string[] args)
         {
+            double delta;
+            double fps;
+
             byte userInput = 0;
             byte currentDir = UP;
             var timer = new Stopwatch();
@@ -48,7 +51,7 @@ namespace SnakeGame
             while (true) // Main loop
             {
                 ForegroundColor = ConsoleColor.DarkYellow;
-                WriteAt($"Score: {snake.tailCount - 2}", 0, 0); // Displays score
+                WriteAt($"Score: {snake.TailCount - 2}", 0, 0); // Displays score
 
                 // prints border
                 ForegroundColor = ConsoleColor.DarkGray;
@@ -66,14 +69,14 @@ namespace SnakeGame
                 }
 
                 ForegroundColor = ConsoleColor.Red;
-                WriteAt(apple.symbol, apple.xPos, apple.yPos);
+                WriteAt(apple.Symbol, apple.XPos, apple.YPos);
 
                 // move snake in current direction and print it to screen
                 snake.MoveSnake(currentDir);
-                WriteAt(snake.symbol, snake.xPos, snake.yPos);
+                WriteAt(snake.Symbol, snake.XPos, snake.YPos);
 
                 //print the tail of the snake as well
-                for (byte i = 0; i < snake.tailPos.Count(); i++)
+                for (byte i = 0; i < snake.TailPos.Count(); i++)
                 {
                     // Some nice color variation to make the movement more visible
                     if (i % 5 == 0 && i % 3 == 0)
@@ -82,11 +85,11 @@ namespace SnakeGame
                         ForegroundColor = ConsoleColor.DarkYellow;
                     else
                         ForegroundColor = ConsoleColor.Green;
-                    WriteAt(snake.symbol, snake.tailPos[i][0], snake.tailPos[i][1]);
+                    WriteAt(snake.Symbol, snake.TailPos[i][0], snake.TailPos[i][1]);
                 }
 
                 // Check for any collisions
-                if (snake.xPos == apple.xPos && snake.yPos == apple.yPos)
+                if (snake.XPos == apple.XPos && snake.YPos == apple.YPos)
                 {
                     snake.AddTail();
                     apple.RandomizePos(snake);
@@ -99,8 +102,8 @@ namespace SnakeGame
                     break;
                 }
 
-                double delta = (timer.Elapsed.TotalMilliseconds);
-                double fps = 1200 - delta;
+                delta = (timer.Elapsed.TotalMilliseconds);
+                fps = 1200 - delta;
                 fps = (fps / 11) + 2;
                 
                 timer.Restart();
