@@ -4,8 +4,7 @@
     {
         public List<byte[]> TailPos { get; set; } = new List<byte[]>();
         public byte TailCount { get; set; } = 2;
-        public char Symbol { get; } = '#';
-        public char TailSymbol { get; } = 'S';
+        public char Symbol { get; } = '#';        
         public byte XPos { get; set; }
         public byte YPos { get; set; }
 
