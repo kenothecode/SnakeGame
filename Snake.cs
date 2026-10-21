@@ -2,19 +2,19 @@
 {
     internal class Snake
     {
-        public List<byte[]> tailPos = new List<byte[]>();
-        public byte tailCount { get; set; } = 2;
-        public char symbol { get; } = '#';
-        public char tailSymbol { get; } = 'S';
-        public byte xPos { get; set; }
-        public byte yPos { get; set; }
+        public List<byte[]> TailPos { get; set; } = new List<byte[]>();
+        public byte TailCount { get; set; } = 2;
+        public char Symbol { get; } = '#';
+        public char TailSymbol { get; } = 'S';
+        public byte XPos { get; set; }
+        public byte YPos { get; set; }
 
         byte screenX, screenY;
 
         public Snake(byte x, byte y, byte maxX, byte maxY)
         {
-            this.xPos = x; 
-            this.yPos = y;
+            this.XPos = x; 
+            this.YPos = y;
 
             this.screenX = maxX;
             this.screenY = maxY;
@@ -22,51 +22,51 @@
 
         public void AddTail()
         {
-            this.tailCount++;
+            this.TailCount++;
         }
 
         public void MoveSnake(byte dir)
         {
-            byte[] oldPos = { xPos, yPos };
+            byte[] oldPos = { XPos, YPos };
 
             switch (dir)
             {
                 case Program.UP:
-                    yPos--;
+                    YPos--;
                     break;
                 case Program.DOWN:
-                    yPos++;
+                    YPos++;
                     break;
                 case Program.LEFT:
-                    xPos--;
+                    XPos--;
                     break;
                 case Program.RIGHT:
-                    xPos++;
+                    XPos++;
                     break;
                 default:
                     break;
             }
 
-            tailPos.Insert(0, oldPos);
+            TailPos.Insert(0, oldPos);
 
-            while (tailPos.Count() > tailCount)
-                tailPos.RemoveAt(tailPos.Count() - 1);
+            while (TailPos.Count() > TailCount)
+                TailPos.RemoveAt(TailPos.Count() - 1);
         }
 
         public bool CheckTailCol()
         {
-            if (xPos > this.screenX - 1 || xPos < 0 || yPos > this.screenY - 1 || yPos <= 0)
+            if (XPos > this.screenX - 1 || XPos < 0 || YPos > this.screenY - 1 || YPos <= 0)
                 return true;
 
-            foreach (byte[] pos in this.tailPos)
-                if (pos[0] == this.xPos && pos[1] == this.yPos) return true;
+            foreach (byte[] pos in this.TailPos)
+                if (pos[0] == this.XPos && pos[1] == this.YPos) return true;
             
             return false;
         }
 
         public bool CheckTailCol(byte x, byte y)
         {
-            foreach (byte[] pos in this.tailPos)
+            foreach (byte[] pos in this.TailPos)
                 if (pos[0] == x && pos[1] == y) return true;
 
             return false;
