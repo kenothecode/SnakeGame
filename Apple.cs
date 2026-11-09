@@ -9,20 +9,20 @@
         private Random rnd;
         public Apple(byte maxX, byte maxY, int? seed = null)
         {
-            this.screenX = maxX;
-            this.screenY = maxY;
+            screenX = maxX;
+            screenY = maxY;
             if (seed != null)
-                this.rnd = new Random((int)seed);
+                rnd = new Random((int)seed);
             else
-                this.rnd = new Random();
+                rnd = new Random();
         }
 
         public void RandomizePos(Snake snake)
         {
             do
             {
-                XPos = (byte)rnd.Next(0, (int)this.screenX - 1);
-                YPos = (byte)rnd.Next(1, (int)this.screenY - 1);
+                XPos = (byte)rnd.Next(0, screenX - 1);
+                YPos = (byte)rnd.Next(1, screenY - 1);
             } while (snake.CheckTailCol(XPos, YPos));
         }
     }

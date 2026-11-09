@@ -3,28 +3,26 @@ using static System.Console;
 
 namespace SnakeGame
 {
+    enum InputValues { Up = 101, Down, Left, Right, Escape = 404 };
     internal class Program
     {
         static byte SCREEN_X = (byte)(WindowWidth / 2 - 4); 
         static byte SCREEN_Y = (byte)(WindowHeight - 1); 
-        public const byte UP = 101, DOWN = 102, LEFT = 103, RIGHT = 104, ESCAPE = 144;
 
         static void Main(string[] args)
         {
             double delta;
             double fps;
 
-            byte userInput = 0;
-            byte currentDir = UP;
+            InputValues userInput = 0;
+            InputValues currentDir = InputValues.Up;
             var timer = new Stopwatch();
 
             Snake snake = new Snake((byte)(SCREEN_X/2), (byte)(SCREEN_Y/2), SCREEN_X, SCREEN_Y);
             Apple apple;
 
             if (args.Length > 0 && int.TryParse(args[0], out int seed))
-            {
                 apple = new Apple(SCREEN_X, SCREEN_Y, seed);
-            }
             else
                 apple = new Apple(SCREEN_X, SCREEN_Y);
 
@@ -32,8 +30,8 @@ namespace SnakeGame
             apple.RandomizePos(snake);
 
             // Setting up border
-            string bottomLine = "";
-            string sideLine = "";
+            string bottomLine = string.Empty;
+            string sideLine = string.Empty;
 
             for (int i = 0; i < SCREEN_Y; i++)
             {
@@ -65,7 +63,7 @@ namespace SnakeGame
                     if (userInput != 0)
                         currentDir = userInput; // Assign the direction the snake moves in to be the user input
 
-                    if (userInput == ESCAPE) break; // Exit game by pressing escape
+                    if (userInput == InputValues.Escape) break; // Exit game by pressing escape
                 }
 
                 ForegroundColor = ConsoleColor.Red;
@@ -134,20 +132,20 @@ namespace SnakeGame
             Write(outString);
         }
 
-        static byte ReadUserInput(ConsoleKey key)
+        static InputValues ReadUserInput(ConsoleKey key)
         {
             switch (key)
             {
                 case ConsoleKey.UpArrow:
-                    return UP;
+                    return InputValues.Up;
                 case ConsoleKey.DownArrow:
-                    return DOWN;
+                    return InputValues.Down;
                 case ConsoleKey.LeftArrow:
-                    return LEFT;
+                    return InputValues.Left;
                 case ConsoleKey.RightArrow:
-                    return RIGHT;
+                    return InputValues.Right;
                 case ConsoleKey.Escape:
-                    return ESCAPE;
+                    return InputValues.Escape;
                 default:
                     return 0;
             }

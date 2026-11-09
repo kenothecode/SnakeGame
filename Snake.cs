@@ -2,7 +2,7 @@
 {
     internal class Snake
     {
-        public List<byte[]> TailPos { get; set; } = new List<byte[]>();
+        public List<byte[]> TailPos { get; set; }
         public byte TailCount { get; set; } = 2;
         public char Symbol { get; } = '#';        
         public byte XPos { get; set; }
@@ -12,34 +12,36 @@
 
         public Snake(byte x, byte y, byte maxX, byte maxY)
         {
-            this.XPos = x; 
-            this.YPos = y;
+            XPos = x; 
+            YPos = y;
 
-            this.screenX = maxX;
-            this.screenY = maxY;
+            screenX = maxX;
+            screenY = maxY;
+
+            TailPos = new List<byte[]>();
         }
 
         public void AddTail()
         {
-            this.TailCount++;
+            TailCount++;
         }
 
-        public void MoveSnake(byte dir)
+        public void MoveSnake(InputValues dir)
         {
             byte[] oldPos = { XPos, YPos };
 
             switch (dir)
             {
-                case Program.UP:
+                case InputValues.Up:
                     YPos--;
                     break;
-                case Program.DOWN:
+                case InputValues.Down:
                     YPos++;
                     break;
-                case Program.LEFT:
+                case InputValues.Left:
                     XPos--;
                     break;
-                case Program.RIGHT:
+                case InputValues.Right:
                     XPos++;
                     break;
                 default:
@@ -54,18 +56,18 @@
 
         public bool CheckTailCol()
         {
-            if (XPos > this.screenX - 1 || XPos < 0 || YPos > this.screenY - 1 || YPos <= 0)
+            if (XPos > screenX - 1 || XPos < 0 || YPos > screenY - 1 || YPos <= 0)
                 return true;
 
-            foreach (byte[] pos in this.TailPos)
-                if (pos[0] == this.XPos && pos[1] == this.YPos) return true;
+            foreach (byte[] pos in TailPos)
+                if (pos[0] == XPos && pos[1] == YPos) return true;
             
             return false;
         }
 
         public bool CheckTailCol(byte x, byte y)
         {
-            foreach (byte[] pos in this.TailPos)
+            foreach (byte[] pos in TailPos)
                 if (pos[0] == x && pos[1] == y) return true;
 
             return false;
